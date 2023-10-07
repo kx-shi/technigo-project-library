@@ -10,6 +10,7 @@
 <body>
   <h1>The Library</h1>
   <form>
+    <button id="reset-filters">Reset</button>
     <fieldset>
       <legend>Genres</legend>
       <div>
@@ -33,8 +34,20 @@
       <div>
         <input type="button" name="genre" value="Dystopian" />
       </div>
+    </fieldset>
+    <fieldset>
+      <legend>Books before/after 21st century</legend>
       <div>
-        <input type="button" name="genre" value="All" />
+        <input type="radio" name="century" value="century-before" />
+        <label>Before 21st century</label>
+      </div>
+      <div>
+        <input type="radio" name="century" value="century-after" />
+        <label>After 21st century</label>
+      </div>
+      <div>
+        <input type="radio" class="radio-default" name="century" checked/>
+        <label>No sorting</label>
       </div>
     </fieldset>
     <fieldset>
@@ -48,7 +61,7 @@
         <label>Rating (lowest to highest)</label>
       </div>
       <div>
-        <input type="radio" id="rating-default" name="sort" checked/>
+        <input type="radio" class="radio-default" name="sort" checked/>
         <label>No sorting</label>
       </div>
     </fieldset>

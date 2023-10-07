@@ -197,39 +197,56 @@ let newBookList = books;
 
 const genreRadios = document.querySelectorAll('input[name="genre"]');
 const sortingRadios = document.querySelectorAll('input[name="sort"]');
+const centuryRadios = document.querySelectorAll('input[name="century"]');
 let library = document.getElementById("bookshelf-container");
+
+document.getElementById("reset-filters").addEventListener("click", () => {
+  newBookList = books;
+  clearChildElements(library);
+  displayBooks(newBookList);
+})
 
 // Populate website with books
 const displayBooks = (bookList) => {
-  bookList.forEach( (book) => {
+  console.log(bookList.length);
+  if(bookList.length <= 0) {
     let bookElement = document.createElement("div");
-    let title = document.createElement("h1");
-    let author = document.createElement("h2");
-    let year = document.createElement("h3");
-    let genre = document.createElement("h3");
-    let rating = document.createElement("h3");
-    let description = document.createElement("p");
-    let image = document.createElement("img")
-  
-    title.innerText = book.title;
-    author.innerText = book.author;
-    year.innerText = book.year;
-    genre.innerText = book.genre;
-    rating.innerText = book.rating;
-    description.innerText = book.description;
-    image.src = book.image;
-  
-    bookElement.appendChild(title);
-    bookElement.appendChild(author);
-    bookElement.appendChild(year);
-    bookElement.appendChild(genre);
-    bookElement.appendChild(rating);
-    bookElement.appendChild(description);
-    bookElement.appendChild(image);
-  
-    bookElement.classList.add("bookshelf-child");
+    let noResults = document.createElement("p");
+    noResults.innerText = "No results"
+    noResults.style.textAlign = "center";
+    bookElement.appendChild(noResults);
     library.appendChild(bookElement);
-  })
+  }else {
+    bookList.forEach( (book) => {
+      let bookElement = document.createElement("div");
+      let title = document.createElement("h1");
+      let author = document.createElement("h2");
+      let year = document.createElement("h3");
+      let genre = document.createElement("h3");
+      let rating = document.createElement("h3");
+      let description = document.createElement("p");
+      let image = document.createElement("img")
+    
+      title.innerText = book.title;
+      author.innerText = book.author;
+      year.innerText = book.year;
+      genre.innerText = book.genre;
+      rating.innerText = book.rating;
+      description.innerText = book.description;
+      image.src = book.image;
+    
+      bookElement.appendChild(title);
+      bookElement.appendChild(author);
+      bookElement.appendChild(year);
+      bookElement.appendChild(genre);
+      bookElement.appendChild(rating);
+      bookElement.appendChild(description);
+      bookElement.appendChild(image);
+    
+      bookElement.classList.add("bookshelf-child");
+      library.appendChild(bookElement);
+    });
+  };
 };
 
 // Clear all books before creating new book elements
@@ -239,17 +256,13 @@ const clearChildElements = (parentNode) => {
   }
 };
 
-// Add functionality to filter buttons
+// Add functionality to filter by genre
 genreRadios.forEach((radio) => {
   // Add an event listener to each radio button to listen for the "change" event.
   // This event triggers when the radio button's state changes (i.e., when it's selected).
   radio.addEventListener("click", function () {
-    if(this.value === "All") {
-      newBookList = books;
-    }else {
-      newBookList = books.filter((book) => book.genre == this.value);
-    }
-    document.getElementById("rating-default").checked = true;
+    newBookList = newBookList.filter((book) => book.genre == this.value);
+    document.getElementsByClassName("radio-default").checked = true;
     clearChildElements(library);
     displayBooks(newBookList);
   });
@@ -264,6 +277,19 @@ sortingRadios.forEach((radio) => {
       newBookList.sort((book1, book2) => {return book2.rating - book1.rating});
     }else {
       newBookList.sort((book1, book2) => {return book1.rating - book2.rating});
+    }
+    clearChildElements(library);
+    displayBooks(newBookList);
+  });
+});
+
+// Add functionality to filter by century
+centuryRadios.forEach((radio) => {
+  radio.addEventListener("change", function () {
+    if(this.value === "century-before") {
+      newBookList = newBookList.filter((book) => book.year < 2000);
+    }else {
+      newBookList = newBookList.filter((book) => book.year > 2000);
     }
     clearChildElements(library);
     displayBooks(newBookList);
