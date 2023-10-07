@@ -45,10 +45,6 @@
         <input type="radio" name="century" value="century-after" />
         <label>After 21st century</label>
       </div>
-      <div>
-        <input type="radio" class="radio-default" name="century" checked/>
-        <label>No sorting</label>
-      </div>
     </fieldset>
     <fieldset>
       <legend>Sort by:</legend>
@@ -60,9 +56,11 @@
         <input type="radio" name="sort" value="rating-lowest" />
         <label>Rating (lowest to highest)</label>
       </div>
+    </fieldset>
+    <fieldset>
+      <legend>Search</legend>
       <div>
-        <input type="radio" class="radio-default" name="sort" checked/>
-        <label>No sorting</label>
+        <input type="text" id="searchbar"onkeyup="searchBook()" placeholder="search..." />
       </div>
     </fieldset>
   </form>

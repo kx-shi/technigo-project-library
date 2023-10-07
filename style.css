@@ -28,6 +28,10 @@ img {
     display: none;
 }
 
+.active {
+    background: grey;
+}
+
 h1 {
     text-align: center;
 }

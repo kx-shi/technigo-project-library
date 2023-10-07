@@ -193,15 +193,16 @@ const books = [
     image: './books-images/unknown.jpg'
   }
 ];
-let newBookList = books;
 
 const genreRadios = document.querySelectorAll('input[name="genre"]');
 const sortingRadios = document.querySelectorAll('input[name="sort"]');
 const centuryRadios = document.querySelectorAll('input[name="century"]');
+const searchBtn = document.getElementById('searchbutton');
+const searchBar = document.getElementById('searchbar');
 let library = document.getElementById("bookshelf-container");
 
 document.getElementById("reset-filters").addEventListener("click", () => {
-  newBookList = books;
+  let newBookList = books;
   clearChildElements(library);
   displayBooks(newBookList);
 })
@@ -258,11 +259,9 @@ const clearChildElements = (parentNode) => {
 
 // Add functionality to filter by genre
 genreRadios.forEach((radio) => {
-  // Add an event listener to each radio button to listen for the "change" event.
-  // This event triggers when the radio button's state changes (i.e., when it's selected).
+  let newBookList;
   radio.addEventListener("click", function () {
-    newBookList = newBookList.filter((book) => book.genre == this.value);
-    document.getElementsByClassName("radio-default").checked = true;
+    newBookList = books.filter((book) => book.genre == this.value);
     clearChildElements(library);
     displayBooks(newBookList);
   });
@@ -270,8 +269,7 @@ genreRadios.forEach((radio) => {
 
 // Add functionality to sort buttons
 sortingRadios.forEach((radio) => {
-  // Add an event listener to each radio button to listen for the "change" event.
-  // This event triggers when the radio button's state changes (i.e., when it's selected).
+  let newBookList;
   radio.addEventListener("change", function () {
     if(this.value === "rating-highest") {
       newBookList.sort((book1, book2) => {return book2.rating - book1.rating});
@@ -285,6 +283,7 @@ sortingRadios.forEach((radio) => {
 
 // Add functionality to filter by century
 centuryRadios.forEach((radio) => {
+  let newBookList;
   radio.addEventListener("change", function () {
     if(this.value === "century-before") {
       newBookList = newBookList.filter((book) => book.year < 2000);
@@ -295,6 +294,21 @@ centuryRadios.forEach((radio) => {
     displayBooks(newBookList);
   });
 });
+
+const searchBook = () => {
+  clearChildElements(library);
+  displayBooks(books);
+  let bookElements = document.querySelectorAll('.bookshelf-child');
+  bookElements.forEach((book) => {
+    if(!book.innerHTML.toLowerCase().includes(searchBar.value.toLowerCase())) {
+      book.classList.add("hidden");
+    }else {
+      if(book.classList.contains("hidden")) {
+       book.classList.remove("hidden"); 
+      }
+    }
+  });
+};
 
 displayBooks(books);
 
