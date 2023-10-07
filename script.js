@@ -269,13 +269,25 @@ genreRadios.forEach((radio) => {
 
 // Add functionality to sort buttons
 sortingRadios.forEach((radio) => {
-  let newBookList;
+  let newBookList = books;
   radio.addEventListener("change", function () {
     if(this.value === "rating-highest") {
       newBookList.sort((book1, book2) => {return book2.rating - book1.rating});
-    }else {
+    }else if(this.value === "rating-lowest") {
       newBookList.sort((book1, book2) => {return book1.rating - book2.rating});
-    }
+    }else if(this.value === "alphabetical") {
+      newBookList.sort((book1, book2) => {
+        var title1 = book1.title.toUpperCase();
+        var title2 = book2.title.toUpperCase();
+        return (title1 < title2) ? -1 : (title1 > title2) ? 1 : 0;
+      });
+    }else {
+      newBookList.sort((book1, book2) => {
+        var title1 = book1.title.toUpperCase();
+        var title2 = book2.title.toUpperCase();
+        return (title2 < title1) ? -1 : (title2 > title1) ? 1 : 0;
+      });
+    };
     clearChildElements(library);
     displayBooks(newBookList);
   });
