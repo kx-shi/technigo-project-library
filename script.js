@@ -295,9 +295,9 @@ sortingRadios.forEach((radio) => {
 
 // Add functionality to filter by century
 centuryRadios.forEach((radio) => {
-  let newBookList;
+  let newBookList = books;
   radio.addEventListener("change", function () {
-    if(this.value === "century-before") {
+    if(this.value == "century-before") {
       newBookList = newBookList.filter((book) => book.year < 2000);
     }else {
       newBookList = newBookList.filter((book) => book.year > 2000);
